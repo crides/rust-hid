@@ -1,6 +1,6 @@
 use libc::c_int;
 use std::ffi::CStr;
-use std::{error, fmt};
+use std::fmt;
 use sys::*;
 
 #[derive(Clone, PartialEq, Eq, Debug)]
@@ -38,24 +38,14 @@ impl From<*mut hid_device> for Error {
 
 impl fmt::Display for Error {
     fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
-        f.write_str(error::Error::description(self))
-    }
-}
-
-impl error::Error for Error {
-    fn description(&self) -> &str {
-        match *self {
+        let s = match *self {
             Error::Initialized => "Already initialized.",
-
             Error::NotFound => "Device not found.",
-
             Error::General => "General error.",
-
             Error::Write => "Write error.",
-
             Error::Read => "Read error.",
-
             Error::String(ref err) => err,
-        }
+        };
+        write!(f, "{}", s)
     }
 }

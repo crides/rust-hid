@@ -1,10 +1,10 @@
-use std::sync::atomic::{AtomicBool, Ordering, ATOMIC_BOOL_INIT};
+use std::sync::atomic::{AtomicBool, Ordering};
 
 use devices::Devices;
 use error::{self, Error};
 use sys::*;
 
-static INITIALIZED: AtomicBool = ATOMIC_BOOL_INIT;
+static INITIALIZED: AtomicBool = AtomicBool::new(false);
 
 /// The device manager.
 pub struct Manager;

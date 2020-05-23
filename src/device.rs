@@ -106,6 +106,19 @@ impl<'a> Device<'a> {
 			Ok(Handle::new(handle))
 		}
 	}
+
+	/// Opens the device with its path
+	pub fn open_by_path(&self) -> error::Result<Handle> {
+		unsafe {
+			let handle = hid_open_path((*self.ptr).path);
+
+			if handle.is_null() {
+				return Err(Error::NotFound);
+			}
+
+			Ok(Handle::new(handle))
+		}
+	}
 }
 
 #[inline]

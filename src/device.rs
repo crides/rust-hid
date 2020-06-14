@@ -18,8 +18,7 @@ impl<'a> Device<'a> {
     #[doc(hidden)]
     pub unsafe fn new<'b>(ptr: *const hid_device_info) -> Device<'b> {
         Device {
-            ptr: ptr,
-
+            ptr,
             _marker: PhantomData,
         }
     }

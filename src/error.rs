@@ -16,14 +16,13 @@ pub enum Error {
 pub type Result<T> = ::std::result::Result<T, Error>;
 
 impl From<c_int> for Error {
-    fn from(value: c_int) -> Error {
-        match value {
-            _ => Error::General,
-        }
+    fn from(_: c_int) -> Error {
+        Error::General
     }
 }
 
 impl From<*mut hid_device> for Error {
+    #[allow(clippy::not_unsafe_ptr_arg_deref)]
     fn from(value: *mut hid_device) -> Error {
         unsafe {
             Error::String(
